@@ -103,17 +103,19 @@ export const useImageUpload = ({
     e.preventDefault();
     e.stopPropagation();
     dragCounter.current += 1;
-    if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
-      setIsDragging(true);
-    }
+    setIsDragging(true);
   }, []);
 
   const handleDragLeave = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
+
     dragCounter.current -= 1;
-    if (dragCounter.current === 0) {
+
+    // Only reset isDragging if we've left all nested elements
+    if (dragCounter.current <= 0) {
       setIsDragging(false);
+      dragCounter.current = 0;
     }
   }, []);
 
@@ -391,10 +393,8 @@ export const useImageUpload = ({
     isUploading,
     overallProgress,
     handleFileSelect,
-    handleDragOver: (e: React.DragEvent) => {
-      handleDragOver(e);
-      handleDragEnter(e);
-    },
+    handleDragOver,
+    handleDragEnter,
     handleDragLeave,
     handleDrop,
     removeImage,

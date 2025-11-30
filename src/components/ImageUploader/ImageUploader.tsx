@@ -29,6 +29,7 @@ export const ImageUploader = ({
     overallProgress,
     handleFileSelect,
     handleDragOver,
+    handleDragEnter,
     handleDragLeave,
     handleDrop,
     removeImage,
@@ -77,6 +78,7 @@ export const ImageUploader = ({
     <div className="w-full max-w-4xl mx-auto p-6">
       {/* Upload Area */}
       <div
+        onDragEnter={handleDragEnter}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
